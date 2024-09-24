@@ -9,7 +9,7 @@ plugins {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-mainClassName = project.properties['main'] ?: 'Main'
+mainClassName = project.properties['main'] ?: 'CMApplicationKt'
 
 repositories {
     mavenCentral()

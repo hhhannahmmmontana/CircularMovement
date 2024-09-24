@@ -1,3 +1,5 @@
+package Extra
+
 sealed class Physics {
     companion object {
         @JvmStatic

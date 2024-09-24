@@ -1,6 +1,8 @@
+package Drawable
+
+import Extra.RaylibExtra
 import com.raylib.Jaylib.*
 import com.raylib.Raylib
-import com.raylib.Raylib.Vector4
 
 class Button(
     private val x: Float,
@@ -10,7 +12,7 @@ class Button(
     val text: String,
     private val onAction: () -> Unit
 ) {
-    var backgroundColor = LIGHTGRAY
+    var backgroundColor = WHITE
     var hoverColor = GRAY
     var clickColor = DARKGRAY
     var borderColor = BLACK
@@ -32,6 +34,10 @@ class Button(
     var strokeWidth = 2f
 
     private var bounds = Rectangle(x, y, width, height)
+
+    fun relocate(x: Float, y: Float) {
+        bounds = bounds.x(x).y(y) as Rectangle
+    }
 
     private fun selectColor(state: Int): Raylib.Color {
         if (isDisabled) {

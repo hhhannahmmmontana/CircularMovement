@@ -1,3 +1,5 @@
+package Extra
+
 import com.raylib.Raylib.*
 
 sealed class RaylibExtra {

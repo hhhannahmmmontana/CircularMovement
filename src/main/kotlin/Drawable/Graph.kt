@@ -1,6 +1,11 @@
+package Drawable
+
+import Extra.Coordinates
+import Extra.RaylibExtra
 import com.raylib.Raylib.*
 
-class Graph(x: Float, y: Float, width: Float, height: Float, private var maxValue: Double, private val color: Color) {
+class Graph(x: Float, y: Float, width: Float, height: Float, private var max: Coordinates, private val color: Color) :
+    IDrawable {
     private val axisWidth = 2f
     private val measurementWidth = 2f
     private val measurementLength = 5f
@@ -11,7 +16,7 @@ class Graph(x: Float, y: Float, width: Float, height: Float, private var maxValu
     private val font = RaylibExtra.Fonts.TimesNewRoman
     private val fontSize = 15f
 
-    private var graphBounds = Rectangle().x(x).y(y).width(width - graphPadding).height(height - graphPadding)
+    private var graphBounds = Rectangle().x(x + graphPadding).y(y).width(width - graphPadding).height(height - graphPadding)
 
     private fun drawAxis() {
         DrawLineEx(
@@ -26,17 +31,13 @@ class Graph(x: Float, y: Float, width: Float, height: Float, private var maxValu
             axisWidth,
             color
         )
-        val initCoordinates = Vector2().x(maxValue).y(maxValue)
-        val initPos = relativeToFactualCoordinates(maxValue)
-        drawMeasurement(maxValue)
-    }
-
-    fun relativeToFactualLength(value: Double): Float {
-
+        val initPos = relativeToFactualCoordinates(max)
+        drawMeasurement(max)
     }
 
     fun relativeToFactualCoordinates(coordinates: Coordinates): Vector2 {
-        val ratio = coordinates.x / max.x
+        val xRatio = coordinates.x / max.x
+        val yRatio = coordinates.y / max.y
         return Vector2().x(
             graphBounds.x() + (graphBounds.width() * xRatio).toFloat()
         ).y(
@@ -44,7 +45,7 @@ class Graph(x: Float, y: Float, width: Float, height: Float, private var maxValu
         )
     }
 
-    private fun drawMeasurement(coordinates: Coordinates) {
+    fun drawMeasurement(coordinates: Coordinates) {
         val pos = relativeToFactualCoordinates(coordinates)
         DrawLineEx(
             Vector2().x(pos.x()).y(graphBounds.y() + graphBounds.height()),
@@ -92,11 +93,11 @@ class Graph(x: Float, y: Float, width: Float, height: Float, private var maxValu
         graphBounds = graphBounds.x(x).y(y)
     }
 
-    fun setMax(x: Double, y: Double) {
-        max = Coordinates(x, y)
+    fun setMax(coordinates: Coordinates) {
+        max = coordinates
     }
 
-    fun draw() {
+    override fun draw() {
         drawAxis()
     }
 }
